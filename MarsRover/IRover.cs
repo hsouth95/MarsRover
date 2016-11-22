@@ -1,8 +1,8 @@
 ﻿namespace MarsRover
 {
-    abstract class IRover
+    public abstract class IRover
     {
-        Point coordinates;
+        private Point coordinates;
 
         public Point Coordinates
         {
@@ -20,5 +20,7 @@
         {
             this.coordinates = coordinates;
         }
+
+        public abstract void Move();
     }
 }

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="IPlanet.cs" />
     <Compile Include="IRover.cs" />

@@ -9,7 +9,7 @@ namespace MarsRover
     class Simulation
     {
         private IPlanet planet;
-        private IRover[] rovers;
+        private IEnumerable<IRover> rovers;
 
         public IPlanet Planet
         {
@@ -23,7 +23,7 @@ namespace MarsRover
             }
         }
 
-        public IRover[] Rovers
+        public IEnumerable<IRover> Rovers
         {
             get
             {
@@ -35,7 +35,7 @@ namespace MarsRover
             }
         }
 
-        public Simulation(IPlanet planet, IRover[] rovers)
+        public Simulation(IPlanet planet, IEnumerable<IRover> rovers)
         {
             this.planet = planet;
             this.rovers = rovers;

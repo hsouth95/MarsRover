@@ -2,12 +2,12 @@
 
 namespace MarsRover
 {
-    abstract class IPlanet
+    public abstract class IPlanet
     {
         private int height;
         private int width;
         
-        public abstract Dictionary<Point, bool> Grid
+        public abstract IDictionary<Point, bool> Grid
         {
             get;
         }
@@ -43,6 +43,6 @@ namespace MarsRover
             this.width = width;
         }
 
-        public abstract void BuildPlanet(IRover[] rovers);
+        public abstract void BuildPlanet(IEnumerable<IRover> rovers);
     }
 }
