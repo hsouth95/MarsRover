@@ -3,6 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MarsRover;
 using System.Collections.Generic;
 using System.Collections;
+using MarsRover.Enums;
+using MarsRover.Planets;
+using MarsRover.Rovers;
 
 namespace MarsRoverTests
 {
@@ -59,6 +62,7 @@ namespace MarsRoverTests
             // Arrange
             var planet = new Planet(2, 2);
 
+            // Fake value to trigger lazy loading
             var tempValue = planet.Grid;
 
             // Act
@@ -158,7 +162,7 @@ namespace MarsRoverTests
 
             var rovers = new List<IRover>
             {
-                new Rover(new Point(3, 3))
+                new Rover(new Point(3, 3), Direction.North)
             };
 
             // Act
@@ -179,8 +183,8 @@ namespace MarsRoverTests
 
             var rovers = new List<IRover>
             {
-                new Rover(new Point(0, 1)),
-                new Rover(new Point(0, 1))
+                new Rover(new Point(0, 1), Direction.North),
+                new Rover(new Point(0, 1), Direction.North)
             };
 
             // Act
@@ -199,8 +203,8 @@ namespace MarsRoverTests
 
             var rovers = new List<IRover>
             {
-                new Rover(new Point(0, 0)),
-                new Rover(new Point(1, 1))
+                new Rover(new Point(0, 0), Direction.North),
+                new Rover(new Point(1, 1), Direction.North)
             };
 
             var expectedGrid = new Dictionary<Point, bool>
@@ -227,8 +231,8 @@ namespace MarsRoverTests
 
             var rovers = new List<IRover>
             {
-                new Rover(new Point(0, 0)),
-                new Rover(new Point(1, 0))
+                new Rover(new Point(0, 0), Direction.North),
+                new Rover(new Point(1, 0), Direction.North)
             };
 
             var expectedGrid = new Dictionary<Point, bool>
@@ -240,6 +244,106 @@ namespace MarsRoverTests
             // Act
             planet.BuildPlanet(rovers);
 
+            CollectionAssert.AreEquivalent(expectedGrid, (ICollection)planet.Grid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UpdateGridPosition_WithNullRover_ThrowsException()
+        {
+            // Arrange
+            var planet = new Planet(1, 1);
+
+            // Act
+            planet.UpdateGridPosition(null, new Point(0, 0));
+
+            // Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UpdateGridPosition_WithNullPreviousCoordinates_ThrowsException()
+        {
+            // Arrange
+            var planet = new Planet(1, 1);
+            var rover = new Rover(new Point(0, 0), Direction.North);
+
+            // Act
+            planet.UpdateGridPosition(rover, null);
+
+            // Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void UpdateGridPosition_WithNoChanges_DoesNothing()
+        {
+            // Arrange
+            var planet = new Planet(1, 1);
+            var rover = new Rover(new Point(0, 0), Direction.North);
+
+            planet.BuildPlanet(new List<IRover> { rover });
+
+            var expectedGrid = new Dictionary<Point, bool>
+            {
+                { new Point(0, 0), true }
+            };
+
+            // Act
+            planet.UpdateGridPosition(rover, new Point(0, 0));
+
+            // Assert
+            CollectionAssert.AreEquivalent(expectedGrid, (ICollection)planet.Grid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void UpdateGridPosition_WithConflictingPosition_ThrowsException()
+        {
+            // Arrange
+            var planet = new Planet(2, 2);
+            var rovers = new List<IRover> {
+                new Rover(new Point(0, 0), Direction.North)
+            };
+
+            planet.BuildPlanet(rovers);
+
+            // This rover will try to move into another rover's area
+            var movedRover = new Rover(new Point(0, 0), Direction.North);
+
+            // Act
+            planet.UpdateGridPosition(movedRover, new Point(0, 1));
+
+            // Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        public void UpdateGridPosition_WithValidValues_UpdatesGrid()
+        {
+            // Arrange
+            var planet = new Planet(2, 2);
+            var rover = new Rover(new Point(0, 0), Direction.North);
+
+            planet.BuildPlanet(new List<IRover> { rover });
+
+            var expectedGrid = new Dictionary<Point, bool>
+            {
+                { new Point(0, 0), false },
+                { new Point(0, 1), false },
+                { new Point(1, 0), true },
+                { new Point(1, 1), false }
+            };
+
+            var currentCoordinates = rover.Coordinates;
+
+            rover.Coordinates = new Point(1, 0);
+
+            // Act
+            planet.UpdateGridPosition(rover, currentCoordinates);
+
+            // Assert
             CollectionAssert.AreEquivalent(expectedGrid, (ICollection)planet.Grid);
         }
     }

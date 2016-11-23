@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MarsRover;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MarsRover;
+using MarsRover.Enums;
+using MarsRover.Rovers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Action = MarsRover.Enums.Action;
 
-namespace MarsRover.Tests
+namespace MarsRoverTests
 {
     [TestClass]
     public class RoverTests
@@ -44,7 +44,7 @@ namespace MarsRover.Tests
         public void GetNextMove_WithNullActions_ReturnsNothingAction()
         {
             // Arrange
-            var rover = new Rover(new Point(0, 0));
+            var rover = new Rover(new Point(0, 0), Direction.North);
 
             // Act
             // Assert

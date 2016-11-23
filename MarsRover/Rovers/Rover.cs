@@ -1,74 +1,59 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using MarsRover.Enums;
+using Action = MarsRover.Enums.Action;
 
-namespace MarsRover
+namespace MarsRover.Rovers
 {
     public class Rover : IRover
     {
-        Direction direction;
-        Queue<Action> actions;
+        /// <summary>
+        /// The series of actions the Rover will take
+        /// </summary>
+        public Queue<Action> Actions { get; set; }
 
-        public Queue<Action> Actions
-        {
-            get
-            {
-                return this.actions;
-            }
-            set
-            {
-                this.actions = value;
-            }
-        }
-
-        public Direction Direction
-        {
-            get
-            {
-                return this.direction;
-            }
-            set
-            {
-                this.direction = value;
-            }
-        }
-
-        public Rover(Point coordinates)
-            : base(coordinates)
-        {
-        }
-
+        /// <summary>
+        /// Initilises an instance of the <see cref="Rover"/> class.
+        /// </summary>
+        /// <param name="coordinates">The coordinates of the Rover</param>
+        /// <param name="direction">The direction the Rover is facing</param>
         public Rover(Point coordinates, Direction direction)
-            : base(coordinates)
+            : base(coordinates, direction)
         {
-            this.direction = direction;
         }
 
+        /// <summary>
+        /// Initilises an instance of the <see cref="Rover"/> class.
+        /// </summary>
+        /// <param name="coordinates">The coordinates of the Rover</param>
+        /// <param name="direction">The direction the Rover is facing</param>
+        /// <param name="actions">The series of actions the Rover will take</param>
         public Rover(Point coordinates, Direction direction, Queue<Action> actions)
-            : base(coordinates)
+            : base(coordinates, direction)
         {
-            this.direction = direction;
-            this.actions = actions;
+            this.Actions = actions;
         }
 
-        public Action GetNextMove()
+        /// <inheritdocs />
+        public override Action GetNextMove()
         {
-            if (this.actions != null && this.actions.Count > 0)
+            if (this.Actions != null && this.Actions.Count > 0)
             {
-                return this.actions.Peek();
+                return this.Actions.Peek();
             }
 
             return Action.Nothing;
         }
 
+        /// <inheritdocs />
         public override void Move()
         {
-            if (this.actions == null || this.actions.Count == 0)
+            if (this.Actions == null || this.Actions.Count == 0)
             {
                 throw new InvalidOperationException("Rover has no more movements to make");
             }
 
-            Action action = this.actions.Dequeue();
+            Action action = this.Actions.Dequeue();
             if(action == Action.MoveForward)
             {
                 this.MoveForward();
@@ -83,9 +68,12 @@ namespace MarsRover
             }
         }
 
+        /// <summary>
+        /// Moves the Rover forward in the direction it is facing
+        /// </summary>
         public void MoveForward()
         {
-            switch (this.direction)
+            switch (this.Direction)
             {
                 case Direction.North:
                     this.Coordinates.Y++;
@@ -114,6 +102,10 @@ namespace MarsRover
             }
         }
 
+        /// <summary>
+        /// Rotates the Rover based on the action it is performing
+        /// </summary>
+        /// <param name="action">The action the Rover is performing</param>
         public void Rotate(Action action)
         {
             if (action != Action.RotateLeft && action != Action.RotateRight)
@@ -121,50 +113,22 @@ namespace MarsRover
                 throw new ArgumentOutOfRangeException(nameof(action));
             }
 
-            switch (this.direction)
+            switch (this.Direction)
             {
                 case Direction.North:
-                    if (action == Action.RotateLeft)
-                    {
-                        this.direction = Direction.West;
-                    }
-                    else
-                    {
-                        this.direction = Direction.East;
-                    }
+                    this.Direction = action == Action.RotateLeft ? Direction.West : Direction.East;
 
                     break;
                 case Direction.East:
-                    if (action == Action.RotateLeft)
-                    {
-                        this.direction = Direction.North;
-                    }
-                    else
-                    {
-                        this.direction = Direction.South;
-                    }
+                    this.Direction = action == Action.RotateLeft ? Direction.North : Direction.South;
 
                     break;
                 case Direction.South:
-                    if (action == Action.RotateLeft)
-                    {
-                        this.direction = Direction.East;
-                    }
-                    else
-                    {
-                        this.direction = Direction.West;
-                    }
+                    this.Direction = action == Action.RotateLeft ? Direction.East : Direction.West;
 
                     break;
                 case Direction.West:
-                    if (action == Action.RotateLeft)
-                    {
-                        this.direction = Direction.South;
-                    }
-                    else
-                    {
-                        this.direction = Direction.North;
-                    }
+                    this.Direction = action == Action.RotateLeft ? Direction.South : Direction.North;
 
                     break;
                 default:

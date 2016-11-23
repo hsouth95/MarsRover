@@ -4,6 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MarsRover.Enums;
+using MarsRover.Planets;
+using MarsRover.Rovers;
+using Action = MarsRover.Enums.Action;
 
 namespace MarsRover
 {
@@ -11,7 +15,6 @@ namespace MarsRover
     {
         static void Main(string[] args)
         {
-
             Console.WriteLine("Please enter the file path of the text file that contains the simulation:");
             string filePath = Console.ReadLine();
             string[] lines = File.ReadAllLines(filePath);
@@ -60,13 +63,22 @@ namespace MarsRover
 
             // Build the simulation
             var simulation = new Simulation(new Planet(height, width), rovers);
+
+            var positions = simulation.Run();
+
+            foreach(var position in positions)
+            {
+                Console.WriteLine(position);
+            }
+
+            Console.ReadKey();
         }
 
         public static Queue<Action> GetActions(string actionLine)
         {
             var roverActions = new Queue<Action>();
 
-            if (string.IsNullOrEmpty(actionLine))
+            if (!string.IsNullOrEmpty(actionLine))
             {
                 char[] actions = actionLine.ToUpper().ToCharArray();
 

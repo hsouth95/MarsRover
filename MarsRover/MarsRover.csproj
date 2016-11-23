@@ -43,15 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Action.cs" />
-    <Compile Include="Direction.cs" />
-    <Compile Include="IPlanet.cs" />
-    <Compile Include="IRover.cs" />
-    <Compile Include="Planet.cs" />
+    <Compile Include="Enums\Action.cs" />
+    <Compile Include="Enums\Direction.cs" />
+    <Compile Include="Planets\IPlanet.cs" />
+    <Compile Include="Rovers\IRover.cs" />
+    <Compile Include="Planets\Planet.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rover.cs" />
+    <Compile Include="Rovers\Rover.cs" />
     <Compile Include="Simulation.cs" />
   </ItemGroup>
   <ItemGroup>
