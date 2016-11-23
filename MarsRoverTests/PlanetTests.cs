@@ -9,6 +9,9 @@ using MarsRover.Rovers;
 
 namespace MarsRoverTests
 {
+    /// <summary>
+    /// Test class to test the functionality of the <see cref="Planet"/> class
+    /// </summary>
     [TestClass]
     public class PlanetTests
     {
@@ -247,6 +250,9 @@ namespace MarsRoverTests
             CollectionAssert.AreEquivalent(expectedGrid, (ICollection)planet.Grid);
         }
 
+        /// <summary>
+        /// Tests that attempting to update the Planet's grid with a null Rover value will throw an exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void UpdateGridPosition_WithNullRover_ThrowsException()
@@ -261,6 +267,9 @@ namespace MarsRoverTests
             Assert.Fail();
         }
 
+        /// <summary>
+        /// Tests that attempting to update the Planet's grid with null coordinates throws an exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void UpdateGridPosition_WithNullPreviousCoordinates_ThrowsException()
@@ -276,6 +285,9 @@ namespace MarsRoverTests
             Assert.Fail();
         }
 
+        /// <summary>
+        /// Tests that updating the Planet's grid with no changes will cause nothing to occur
+        /// </summary>
         [TestMethod]
         public void UpdateGridPosition_WithNoChanges_DoesNothing()
         {
@@ -297,6 +309,9 @@ namespace MarsRoverTests
             CollectionAssert.AreEquivalent(expectedGrid, (ICollection)planet.Grid);
         }
 
+        /// <summary>
+        /// Tests that attempting to update the Planet's grid with an area out of bounds will throw an exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void UpdateGridPosition_WithCoordinatesOutOfPlanetGrid_ThrowsException()
@@ -316,6 +331,9 @@ namespace MarsRoverTests
             Assert.Fail();
         }
 
+        /// <summary>
+        /// Tests that attempting to update the Planet's grid with an area where a Rover exists will throw an exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void UpdateGridPosition_WithConflictingPosition_ThrowsException()
@@ -338,6 +356,9 @@ namespace MarsRoverTests
             Assert.Fail();
         }
 
+        /// <summary>
+        /// Tests that updating the Planet's grid with valid values will update the grid as expected
+        /// </summary>
         [TestMethod]
         public void UpdateGridPosition_WithValidValues_UpdatesGrid()
         {

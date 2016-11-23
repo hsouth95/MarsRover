@@ -1,5 +1,8 @@
 ﻿namespace MarsRover
 {
+    /// <summary>
+    /// Class to represent an area
+    /// </summary>
     public class Point
     {
         /// <summary>

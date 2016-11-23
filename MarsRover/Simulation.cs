@@ -7,6 +7,9 @@ using Action = MarsRover.Enums.Action;
 
 namespace MarsRover
 {
+    /// <summary>
+    /// Class to represent the main engine of the simulation
+    /// </summary>
     public class Simulation
     {
         /// <summary>

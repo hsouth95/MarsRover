@@ -10,6 +10,9 @@ using System;
 
 namespace MarsRoverTests
 {
+    /// <summary>
+    /// Test class to run the core functionality of the <see cref="Simulation"/> class
+    /// </summary>
     [TestClass()]
     public class SimulationTests
     {
@@ -35,6 +38,9 @@ namespace MarsRoverTests
             mockPlanet.Verify(s => s.BuildPlanet(It.IsAny<IEnumerable<IRover>>()), Times.Once);
         }
 
+        /// <summary>
+        /// Tests that retrieving the final position of a single rover returns a valid string
+        /// </summary>
         [TestMethod]
         public void GetFinishingPositions_WithSingleRover_ReturnsValidStrings()
         {
@@ -61,6 +67,9 @@ namespace MarsRoverTests
             CollectionAssert.AreEquivalent(expectedResults, results);
         }
 
+        /// <summary>
+        /// Tests that retrieving the final positions of multiple rovers returns a valid list of strings
+        /// </summary>
         [TestMethod]
         public void GetFinishingPositions_WithMultipleRovers_ReturnsValidStrings()
         {
@@ -89,6 +98,9 @@ namespace MarsRoverTests
             CollectionAssert.AreEquivalent(expectedResults, results);
         }
 
+        /// <summary>
+        /// Tests that retrieving the final positions of no rovers will return an empty collection
+        /// </summary>
         [TestMethod]
         public void GetFinishingPositions_WithNoRovers_ReturnsEmptyCollection()
         {
@@ -105,6 +117,9 @@ namespace MarsRoverTests
             Assert.IsTrue(results.Count == 0);
         }
 
+        /// <summary>
+        /// Tests that running a Rover which has no next move will do nothing
+        /// </summary>
         [TestMethod]
         public void RunRover_WithNoNextMove_DoesNothing()
         {
@@ -130,6 +145,9 @@ namespace MarsRoverTests
             mockPlanet.Verify(s => s.UpdateGridPosition(It.IsAny<IRover>(), It.IsAny<Point>()), Times.Never);
         }
 
+        /// <summary>
+        /// Tests that running a rover with a movement that does not alter it's coordinates will cause no change in the Planet
+        /// </summary>
         [TestMethod]
         public void RunRover_WithEqualCoordinates_DoesNotUpdateGrid()
         {
@@ -160,6 +178,9 @@ namespace MarsRoverTests
             mockPlanet.Verify(s => s.UpdateGridPosition(It.IsAny<IRover>(), It.IsAny<Point>()), Times.Never);
         }
 
+        /// <summary>
+        /// Tests that running a rover into an area that is already occupied will throw an exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void RunRover_AreaAlreadyOccupied_ThrowsException()
@@ -194,6 +215,9 @@ namespace MarsRoverTests
             Assert.Fail();
         }
 
+        /// <summary>
+        /// Tests that running a Rover with a valid movement operation updates the Planet
+        /// </summary>
         [TestMethod]
         public void RunRover_WithValidOperation_UpdatesPlanetGrid()
         {

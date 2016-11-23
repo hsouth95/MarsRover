@@ -5,6 +5,9 @@ using Action = MarsRover.Enums.Action;
 
 namespace MarsRover.Rovers
 {
+    /// <summary>
+    /// Implementation of the <see cref="IRover"/> class
+    /// </summary>
     public class Rover : IRover
     {
         /// <summary>

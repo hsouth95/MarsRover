@@ -9,6 +9,9 @@ using System.Linq;
 
 namespace MarsRoverTests
 {
+    /// <summary>
+    /// Test class to test the overall functionality of the Simulation
+    /// </summary>
     [TestClass]
     public class SimulationRunTests
     {

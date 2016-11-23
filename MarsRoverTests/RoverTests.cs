@@ -8,9 +8,15 @@ using Action = MarsRover.Enums.Action;
 
 namespace MarsRoverTests
 {
+    /// <summary>
+    /// Test class for testing the functionality of the <see cref="Rover"/> class
+    /// </summary>
     [TestClass]
     public class RoverTests
     {
+        /// <summary>
+        /// Tests that a valid next move is returned when only one exists
+        /// </summary>
         [TestMethod]
         public void GetNextMove_WithValidSingularAction_ReturnsAction()
         {
@@ -25,6 +31,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Action.MoveForward, rover.GetNextMove());
         }
 
+        /// <summary>
+        /// Tests that a valid next move is returned when more than one exists
+        /// </summary>
         [TestMethod]
         public void GetNextMove_WithValidMultipleActions_ReturnsFirstAction()
         {
@@ -40,6 +49,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Action.MoveForward, rover.GetNextMove());
         }
 
+        /// <summary>
+        /// Tests that a Nothing value is returned when the Rover has no next move
+        /// </summary>
         [TestMethod]
         public void GetNextMove_WithNullActions_ReturnsNothingAction()
         {
@@ -51,6 +63,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Action.Nothing, rover.GetNextMove());
         }
 
+        /// <summary>
+        /// Tests that a Nothing value is returned when the Rover has no next move
+        /// </summary>
         [TestMethod]
         public void GetNextMove_WithEmptyActionsQueue_ReturnsNothingAction()
         {
@@ -62,6 +77,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Action.Nothing, rover.GetNextMove());
         }
 
+        /// <summary>
+        /// Tests that moving forward when facing north will update the Y coordinate of the Rover
+        /// </summary>
         [TestMethod()]
         public void MoveForward_WithNorthDirection_MovesCoordinates()
         {
@@ -76,6 +94,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Direction.North, rover.Direction);
         }
 
+        /// <summary>
+        /// Tests that moving forward when facing east will update the X coordinate of the Rover
+        /// </summary>
         [TestMethod]
         public void MoveForward_WithEastDirection_MovesCoordinates()
         {
@@ -90,6 +111,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Direction.East, rover.Direction);
         }
 
+        /// <summary>
+        /// Tests that moving forward when facing west will update the X coordinates of the Rover
+        /// </summary>
         [TestMethod]
         public void MoveForward_WithWestDirection_MovesCoordinates()
         {
@@ -104,6 +128,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Direction.West, rover.Direction);
         }
 
+        /// <summary>
+        /// Tests that moving forward when facing south will update the Y coordinates of the Rover
+        /// </summary>
         [TestMethod]
         public void MoveForward_WithSouthDirection_MovesCoordinates()
         {
@@ -118,6 +145,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Direction.South, rover.Direction);
         }
 
+        /// <summary>
+        /// Test that attempting to move the Rover below the Y boundary will throw an exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MoveForward_WithSouthDirectionAtYLowerBoundary_ThrowsException()
@@ -131,6 +161,9 @@ namespace MarsRoverTests
             Assert.Fail();
         }
 
+        /// <summary>
+        /// Tests that attempting to move the Rover below the X boundary will throw and exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MoveForward_WithWestDirectionAtYLowerBoundary_ThrowsException()
@@ -144,6 +177,9 @@ namespace MarsRoverTests
             Assert.Fail();
         }
 
+        /// <summary>
+        /// Tests that rotating the Rover right will change the direction
+        /// </summary>
         [TestMethod]
         public void Rotate_WithRightAction_ChangesDirectionAccordingly()
         {
@@ -158,6 +194,9 @@ namespace MarsRoverTests
             Assert.AreEqual(new Point(0, 0), rover.Coordinates);
         }
 
+        /// <summary>
+        /// Tests that rotating the Rover left will change the direction
+        /// </summary>
         [TestMethod]
         public void Rotate_WithLeftAction_ChangesDirectionAccordingly()
         {
@@ -172,6 +211,9 @@ namespace MarsRoverTests
             Assert.AreEqual(new Point(0, 0), rover.Coordinates);
         }
 
+        /// <summary>
+        /// Tests that rotating the Rover right with a different direction will change the direction
+        /// </summary>
         [TestMethod]
         public void Rotate_WithRightActionAndEastDirection_ChangesDirectionAccordingly()
         {
@@ -186,6 +228,9 @@ namespace MarsRoverTests
             Assert.AreEqual(new Point(0, 0), rover.Coordinates);
         }
 
+        /// <summary>
+        /// Tests that rotating the Rover left with a different direction will change the direction
+        /// </summary>
         [TestMethod]
         public void Rotate_WithLeftActionAndWestDirection_ChangesDirectionAccordingly()
         {
@@ -200,6 +245,9 @@ namespace MarsRoverTests
             Assert.AreEqual(new Point(0, 0), rover.Coordinates);
         }
 
+        /// <summary>
+        /// Tests that rotating with an invalid action throws an exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Rotate_WithInvalidAction_ThrowsException()
@@ -213,6 +261,9 @@ namespace MarsRoverTests
             Assert.Fail();
         }
 
+        /// <summary>
+        /// Tests that moving the Rover forward updates the coordinates
+        /// </summary>
         [TestMethod]
         public void Move_WithMoveForwardAction_UpdatesCoordinates()
         {
@@ -227,6 +278,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Direction.North, rover.Direction);
         }
 
+        /// <summary>
+        /// Tests that rotating the Rover updates the direction
+        /// </summary>
         [TestMethod]
         public void Move_WithRotateRightAction_UpdatesDirections()
         {
@@ -241,6 +295,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Direction.East, rover.Direction);
         }
 
+        /// <summary>
+        /// Tests that rotating the Rover updates the direction
+        /// </summary>
         [TestMethod]
         public void Move_WithRotateLeftAction_UpdatesDirections()
         {
@@ -255,6 +312,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Direction.West, rover.Direction);
         }
 
+        /// <summary>
+        /// Tests that perfoming a series of actions updates the coordinates and direction as expected
+        /// </summary>
         [TestMethod]
         public void Move_WithCombinationOfActions_UpdatesCoordinatesAndDirection()
         {
@@ -275,6 +335,9 @@ namespace MarsRoverTests
             Assert.AreEqual(Direction.East, rover.Direction);
         }
 
+        /// <summary>
+        /// Tests that perfoming a movement with no next movement throws an exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void Move_WithNoActions_ThrowsException()

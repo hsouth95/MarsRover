@@ -2,6 +2,9 @@
 
 namespace MarsRover.Rovers
 {
+    /// <summary>
+    /// Abstract class to represent the common functionalities of a Rover
+    /// </summary>
     public abstract class IRover
     {
         /// <summary>
