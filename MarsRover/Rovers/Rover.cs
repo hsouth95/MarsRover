@@ -54,10 +54,10 @@ namespace MarsRover.Rovers
             }
 
             Action action = this.Actions.Dequeue();
-            if(action == Action.MoveForward)
+            if (action == Action.MoveForward)
             {
                 this.MoveForward();
-            } 
+            }
             else if (action == Action.RotateLeft || action == Action.RotateRight)
             {
                 this.Rotate(action);

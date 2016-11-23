@@ -263,7 +263,7 @@ namespace MarsRoverTests
             actions.Enqueue(Action.RotateRight);
             actions.Enqueue(Action.MoveForward);
             actions.Enqueue(Action.RotateLeft);
-            
+
             var rover = new Rover(new Point(0, 1), Direction.North, actions);
 
             rover.Move();

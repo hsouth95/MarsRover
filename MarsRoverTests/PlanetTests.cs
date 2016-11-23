@@ -298,6 +298,25 @@ namespace MarsRoverTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void UpdateGridPosition_WithCoordinatesOutOfPlanetGrid_ThrowsException()
+        {
+            // Arrange
+            var planet = new Planet(1, 1);
+            var rover = new Rover(new Point(0, 0), Direction.North);
+
+            planet.BuildPlanet(new List<IRover> { rover });
+
+            rover.Coordinates.Y = 1;
+
+            // Act
+            planet.UpdateGridPosition(rover, new Point(0, 0));
+
+            // Assert
+            Assert.Fail();
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void UpdateGridPosition_WithConflictingPosition_ThrowsException()
         {

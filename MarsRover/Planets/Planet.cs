@@ -23,7 +23,7 @@ namespace MarsRover.Planets
             : base(height, width)
         {
         }
-        
+
         /// <inheritdoc />
         public override IDictionary<Point, bool> Grid
         {
@@ -64,7 +64,12 @@ namespace MarsRover.Planets
         /// <inheritdoc />
         public override bool IsAreaOccupied(Point point)
         {
-            return this.Grid[point];
+            if (this.Grid.ContainsKey(point))
+            {
+                return this.Grid[point];
+            }
+
+            throw new KeyNotFoundException("Point does not exist in Planet");
         }
 
         /// <inheritdoc />
@@ -99,20 +104,27 @@ namespace MarsRover.Planets
         /// <inheritdoc />
         public override void UpdateGridPosition(IRover rover, Point previousCoordinates)
         {
-            if(rover == null)
+            if (rover == null)
             {
                 throw new ArgumentNullException(nameof(rover));
             }
 
-            if(previousCoordinates == null)
+            if (previousCoordinates == null)
             {
                 throw new ArgumentNullException(nameof(previousCoordinates));
             }
 
             // No changes need to occur if the new coordinates are the same as the previous ones
-            if(rover.Coordinates.Equals(previousCoordinates))
+            if (rover.Coordinates.Equals(previousCoordinates))
             {
                 return;
+            }
+
+            // Check that the coordinates are within the range of this planet
+            if (rover.Coordinates.X < 0 || rover.Coordinates.X >= this.Width
+                || rover.Coordinates.Y < 0 || rover.Coordinates.Y >= this.Height)
+            {
+                throw new ArgumentException($"Rover with coordinates: {rover.Coordinates.ToString()} is out of the grid dimensions");
             }
 
             // Check if there is a conflict in positions

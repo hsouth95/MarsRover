@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MarsRover.Enums;
 using MarsRover.Planets;
 using MarsRover.Rovers;
@@ -57,23 +54,41 @@ namespace MarsRover
                 }
 
                 Queue<Action> actions = GetActions(lines[i + 1]);
-                
+
                 rovers.Add(new Rover(new Point(x, y), direction, actions));
             }
 
             // Build the simulation
             var simulation = new Simulation(new Planet(height, width), rovers);
 
-            var positions = simulation.Run();
-
-            foreach(var position in positions)
+            IEnumerable<string> positions = null;
+            try
             {
-                Console.WriteLine(position);
+                positions = simulation.Run();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"There was an error with the simulation: {e.Message}");
+                Console.WriteLine("Please update the file and try again.");
+            }
+
+            // Output the results
+            if (positions != null)
+            {
+                foreach (var position in positions)
+                {
+                    Console.WriteLine(position);
+                }
             }
 
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Builds a series of movements for a Rover
+        /// </summary>
+        /// <param name="actionLine">The string of input</param>
+        /// <returns>A <see cref="Queue{Action}"/> of the Rover's actions</returns>
         public static Queue<Action> GetActions(string actionLine)
         {
             var roverActions = new Queue<Action>();
@@ -84,7 +99,7 @@ namespace MarsRover
 
                 foreach (var action in actions)
                 {
-                    switch(action)
+                    switch (action)
                     {
                         case 'M':
                             roverActions.Enqueue(Action.MoveForward);
